@@ -20,11 +20,17 @@ class TestResult
   end
 
   def summary
-    msg = "#{@run_count} run, #{@fail_count} failed"
-    if !@errors.empty?
-      msg += '\nFailing tests'
-      @errors.each { |error| msg += '\n' + error[:name] }
-    end
+    "#{@run_count} run, #{@fail_count} failed"
+  end
+
+  def failures?
+    @fail_count.positive?
+  end
+
+  def details
+    'No failures' if @fail_count.zero?
+    msg = 'Failing tests'
+    @errors.each { |error| msg += "\n" + error[:name] }
     msg
   end
 end

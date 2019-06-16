@@ -30,7 +30,19 @@ class TestResultTest < TestCase
   def test_errors
     test = WasRun.new('broken_method')
     result = test.run
-    assert '1 run, 1 failed\nFailing tests\nbroken_method', result.summary
+    assert '1 run, 1 failed', result.summary
+  end
+
+  def test_failures
+    test = WasRun.new('broken_method')
+    result = test.run
+    assert_true result.failures?
+  end
+
+  def test_details
+    test = WasRun.new('broken_method')
+    result = test.run
+    assert "Failing tests\nbroken_method", result.details
   end
 end
 
@@ -78,7 +90,11 @@ suite.add TestCaseTest.new('test_failed_result')
 suite.add TestCaseTest.new('test_tear_down_invoked_on_failure')
 suite.add TestSuiteTest.new('test_suite_test')
 suite.add TestResultTest.new('test_errors')
-pp suite.run.summary
+suite.add TestResultTest.new('test_failures')
+suite.add TestResultTest.new('test_details')
+result = suite.run
+pp result.summary
+pp result.details if result.failures?
 
 # test = TestResultTest.new('test_errors')
 # pp test.run.summary
