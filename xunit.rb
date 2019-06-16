@@ -8,11 +8,24 @@ class TestCase
     @name = name
   end
 
+  def setup; end
+
   def run
+    setup
     send(@name)
   end
 
-  def assert(a, b)
-    raise AssertionError, "#{a.inspect} != #{b.inspect}" unless a == b
+  def assert(expected, actual)
+    if actual != expected
+      raise AssertionError, "#{actual.inspect} != #{expected.inspect}"
+    end
+  end
+
+  def assert_true(value)
+    assert(true, value)
+  end
+
+  def assert_false(value)
+    assert(false, value)
   end
 end

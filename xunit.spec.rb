@@ -1,11 +1,16 @@
 require_relative './xunit'
 
 class WasRun < TestCase
-  attr_reader :was_run
+  attr_reader :was_run, :was_setup
 
   def initialize(name)
     super
     @was_run = false
+    @was_setup = false
+  end
+
+  def setup
+    @was_setup = true
   end
 
   def test_method
@@ -14,12 +19,20 @@ class WasRun < TestCase
 end
 
 class TestCaseTest < TestCase
+  def setup
+    @test = WasRun.new('test_method')
+  end
+
   def test_running
-    test = WasRun.new('test_method')
-    assert(false, test.was_run)
-    test.run
-    assert(true, test.was_run)
+    assert_false @test.was_run
+    @test.run
+    assert_true @test.was_run
+  end
+
+  def test_setup
+    @test.run
+    assert_true @test.was_setup
   end
 end
 
-TestCaseTest.new('test_running').run
+TestCaseTest.new('test_setup').run
