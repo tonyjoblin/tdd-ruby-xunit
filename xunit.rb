@@ -6,7 +6,6 @@ end
 class TestResult
   def initialize
     @run_count = 0
-    @fail_count = 0
     @errors = []
   end
 
@@ -16,19 +15,22 @@ class TestResult
 
   def test_failed(name)
     @errors << { name: name }
-    @fail_count += 1
+  end
+
+  def fail_count
+    @errors.count
   end
 
   def summary
-    "#{@run_count} run, #{@fail_count} failed"
+    "#{@run_count} run, #{fail_count} failed"
   end
 
   def failures?
-    @fail_count.positive?
+    fail_count.positive?
   end
 
   def details
-    'No failures' if @fail_count.zero?
+    'No failures' if fail_count.zero?
     msg = 'Failing tests'
     @errors.each { |error| msg += "\n" + error[:name] }
     msg
