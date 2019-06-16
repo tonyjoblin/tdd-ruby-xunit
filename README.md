@@ -17,5 +17,5 @@ Implement xUnit in Ruby.
 - Report collected results [Done]
 - Catch and report setup errors
 - Test suite [Done]
-- Report details of failures
+- List tests that failed [Done]
 

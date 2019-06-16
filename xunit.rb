@@ -7,18 +7,25 @@ class TestResult
   def initialize
     @run_count = 0
     @fail_count = 0
+    @errors = []
   end
 
   def test_started
     @run_count += 1
   end
 
-  def test_failed
+  def test_failed(name)
+    @errors << { name: name }
     @fail_count += 1
   end
 
   def summary
-    "#{@run_count} run, #{@fail_count} failed"
+    msg = "#{@run_count} run, #{@fail_count} failed"
+    if !@errors.empty?
+      msg += '\nFailing tests'
+      @errors.each { |error| msg += '\n' + error[:name] }
+    end
+    msg
   end
 end
 
@@ -37,7 +44,7 @@ class TestCase
     send(@name)
     result
   rescue StandardError
-    result.test_failed
+    result.test_failed(@name)
     result
   ensure
     tear_down
