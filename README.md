@@ -12,6 +12,6 @@ Implement xUnit in Ruby.
 - Invoke test method [Done]
 - Invoke setUp [Done]
 - Invoke tearDown afterward [Done]
-- Invoke tearDown even if the test method fails
+- Invoke tearDown even if the test method fails [Done]
 - Run multiple tests
-- Report collected results
+- Report collected results [Done]
