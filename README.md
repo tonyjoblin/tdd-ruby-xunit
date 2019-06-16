@@ -15,3 +15,7 @@ Implement xUnit in Ruby.
 - Invoke tearDown even if the test method fails [Done]
 - Run multiple tests
 - Report collected results [Done]
+- Catch and report setup errors
+- Test suite [Done]
+- Report details of failures
+

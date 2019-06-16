@@ -31,8 +31,7 @@ class TestCase
 
   def tear_down; end
 
-  def run
-    result = TestResult.new
+  def run(result = TestResult.new)
     result.test_started
     set_up
     send(@name)
@@ -56,5 +55,21 @@ class TestCase
 
   def assert_false(value)
     assert(false, value)
+  end
+end
+
+class TestSuite
+  def initialize
+    @tests = []
+  end
+
+  def add(test)
+    @tests << test
+  end
+
+  def run
+    result = TestResult.new
+    @tests.each { |test| test.run(result) }
+    result
   end
 end

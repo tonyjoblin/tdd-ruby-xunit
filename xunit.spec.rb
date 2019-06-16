@@ -48,10 +48,25 @@ class TestCaseTest < TestCase
 
   def test_tear_down_invoked_on_failure
     test = WasRun.new('broken_method')
-    result = test.run
-    assert 'set_up raise broken tear_down ', result.summary
+    test.run
+    assert 'set_up raise broken tear_down ', test.log
   end
 end
 
-result = TestCaseTest.new('test_failed_result').run
-puts result.summary
+class TestSuiteTest < TestCase
+  def test_suite_test
+    suite = TestSuite.new
+    suite.add(WasRun.new('test_method'))
+    suite.add(WasRun.new('broken_method'))
+    result = suite.run
+    assert '2 run, 1 failed', result.summary
+  end
+end
+
+suite = TestSuite.new
+suite.add TestCaseTest.new('test_template_method')
+suite.add TestCaseTest.new('test_result')
+suite.add TestCaseTest.new('test_failed_result')
+suite.add TestCaseTest.new('test_tear_down_invoked_on_failure')
+suite.add TestSuiteTest.new('test_suite_test')
+pp suite.run.summary
