@@ -8,24 +8,28 @@ class WasRun < TestCase
     @log = ''
   end
 
-  def setup
-    @log = 'setup '
+  def set_up
+    @log = 'set_up '
   end
 
   def test_method
     @log += 'test_method '
   end
+
+  def tear_down
+    @log += 'tear_down '
+  end
 end
 
 class TestCaseTest < TestCase
-  def setup
+  def set_up
     @test = WasRun.new('test_method')
   end
 
   def test_template_method
     assert '', @test.log
     @test.run
-    assert 'setup test_method ', @test.log
+    assert 'set_up test_method tear_down ', @test.log
   end
 end
 

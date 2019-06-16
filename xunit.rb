@@ -8,11 +8,14 @@ class TestCase
     @name = name
   end
 
-  def setup; end
+  def set_up; end
+
+  def tear_down; end
 
   def run
-    setup
+    set_up
     send(@name)
+    tear_down
   end
 
   def assert(expected, actual)
