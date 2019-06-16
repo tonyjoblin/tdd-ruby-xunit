@@ -11,9 +11,13 @@ class WasRun
   def test_method
     @was_run = true
   end
+
+  def run
+    send(@name)
+  end
 end
 
 test = WasRun.new('test_method')
 pp test.was_run
-test.test_method
+test.run
 pp test.was_run
